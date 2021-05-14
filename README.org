@@ -1,5 +1,5 @@
 * Leetcode CLI Viewer
 
-[./png/lcv01.png]
+[[./png/lcv01.png]]
 
-[./png/lcv02.png]
+[[./png/lcv02.png]]
