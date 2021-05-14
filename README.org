@@ -1,14 +1,14 @@
 * Leetcode CLI Viewer (LCV)
 
-** Dependency: dialog
+** Dependency
 #+begin_src org :eval never-export
 sudo apt install dialog
-#end_src
+#+end_src
 
 ** Run
 #+begin_src org :eval never-export
 $ ./lcv.sh
-#end_src
+#+end_src
 
 ** Screenshots
 *** Problem List
