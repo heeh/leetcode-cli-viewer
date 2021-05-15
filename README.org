@@ -18,7 +18,15 @@ $ ./lcv.sh
 #+end_src
 
 ** Screenshots
-*** Problem List
+*** Problem List Selection
+[[./png/lcv04.png]]
+
+*** Problem Selection
 [[./png/lcv01.png]]
-*** Problem Description
+*** Actions
 [[./png/lcv02.png]]
+
+*** Problem Description
+[[./png/lcv03.png]]
+
+

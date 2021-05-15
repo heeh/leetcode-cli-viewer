@@ -1,88 +1,110 @@
 #!/bin/bash
 
-HEIGHT=60
-WIDTH=120
+HEIGHT=0
+WIDTH=0
 CHOICE_HEIGHT=10
 BACKTITLE="Backtitle here"
 TITLE="Title here"
 MENU="Choose one of the following options:"
 
-OPTIONS=(1 "List Google(Easy)"
-         2 "List Google(Medium)")
+LIST_OPT=(1 "List Problems(Easy)"
+          2 "List Problems(Medium)"
+	 )
 
-PROB_OPT=(1 "Show Problem "
-          2 "Show Problem + Download Source"
-	  3 "Show Problem + Download Source + Add Description to source"
+PROB_OPT=(1 "Show Problem"
+          2 "Edit Solution"
+	  3 "Test Solution"
+	  4 "Submit Solution"
+	  5 "Change Problem"
+	  6 "Change Problem List"
 	 )
 
 
-
-
-
-while true; do
-    #function menu_prompt() {
-    CHOICE=$(dialog --clear \
+function promptList() {
+    LIST_CHOICE=$(dialog --clear \
                     --backtitle "$BACKTITLE" \
                     --title "$TITLE" \
                     --menu "$MENU" \
                     $HEIGHT $WIDTH $CHOICE_HEIGHT \
-                    "${OPTIONS[@]}" \
+                    "${LIST_OPT[@]}" \
                     2>&1 >/dev/tty)
-    clear
-    case $CHOICE in
+    echo $LIST_CHOICE
+}
+
+function loadList() {
+    local LIST_CHOICE=$1
+    case $LIST_CHOICE in
 	1)
-	    leetcode list -q e -t google > list.txt
-	    PROBLEMS=()
-	    while read n s ; do
-		PROBLEMS+=("${s:2:3}" "${s:7}")
-	    done < list.txt
-	    PROB=$(dialog --menu "$MENU" $HEIGHT $WIDTH $CHOICE_HEIGHT \
-			  "${PROBLEMS[@]}" \
-			  2>&1 >/dev/tty)
-	    PROB_CHOICE=$(dialog --menu "$MENU" $HEIGHT $WIDTH $CHOICE_HEIGHT \
-				 "${PROB_OPT[@]}" \
-				 2>&1 >/dev/tty) 
-	    case $PROB_CHOICE in
-		1)
-		    leetcode show "${PROB}"  > prob.txt
-		    dialog --textbox prob.txt $HEIGHT $WIDTH
-		    ;;
-		2)
-		    leetcode show "${PROB} -g" > prob.txt
-		    dialog --textbox prob.txt $HEIGHT $WIDTH
-		    ;;
-		3)
-		    leetcode show "${PROB} -gx" > prob.txt
-		    dialog --textbox prob.txt $HEIGHT $WIDTH
-		    ;;		
-	    esac
+	    leetcode list -q e > prob_cache.txt
 	    ;;
 	2)
-	    leetcode list -q m -t google > list.txt
-	    PROBLEMS=()
-	    while read n s ; do
-		PROBLEMS+=("${s:2:3}" "${s:7}")
-	    done < list.txt
-	    PROB=$(dialog --menu "$MENU" $HEIGHT $WIDTH $CHOICE_HEIGHT \
-			  "${PROBLEMS[@]}" \
-			  2>&1 >/dev/tty)
-	    PROB_CHOICE=$(dialog --menu "$MENU" $HEIGHT $WIDTH $CHOICE_HEIGHT \
-				 "${PROB_OPT[@]}" \
-				 2>&1 >/dev/tty) 
-	    case $PROB_CHOICE in
-		1)
-		    leetcode show "${PROB}"  > prob.txt
-		    dialog --textbox prob.txt $HEIGHT $WIDTH
-		    ;;
-		2)
-		    leetcode show "${PROB} -g" > prob.txt
-		    dialog --textbox prob.txt $HEIGHT $WIDTH
-		    ;;
-		3)
-		    leetcode show "${PROB} -gx" > prob.txt
-		    dialog --textbox prob.txt $HEIGHT $WIDTH
-		    ;;		
-	    esac	
-            ;;
+	    leetcode list -q m > prob_cache.txt
+	    ;;
     esac
+}
+
+function processList() {
+    PROBLEMS=()
+    while read -r s ; do
+	index=$(echo "$s" | grep -o -E '[0-9]+' | head -1 )
+	PROBLEMS+=("$index" "${s}")
+    done < prob_cache.txt
+    PROB_NUMBER=$(dialog --menu "$MENU" $HEIGHT $WIDTH $CHOICE_HEIGHT \
+			 "${PROBLEMS[@]}" \
+			 2>&1 >/dev/tty)
+    echo $PROB_NUMBER
+}
+
+function processProblem() {
+    PROB_NUMBER=$1
+    PROB_ACTION=$(dialog --menu "Problem Number: $PROB_NUMBER" $HEIGHT $WIDTH $CHOICE_HEIGHT \
+			 "${PROB_OPT[@]}" \
+			 2>&1 >/dev/tty)     
+    case $PROB_ACTION in
+	1)
+	    leetcode pick "${PROB_NUMBER}" > prob.txt
+	    dialog --textbox prob.txt $HEIGHT $WIDTH
+	    ;;
+	2)
+	    leetcode edit "${PROB_NUMBER}" > prob.txt
+	    dialog --textbox prob.txt $HEIGHT $WIDTH
+	    ;;
+	3)
+	    leetcode test "${PROB_NUMBER}" > prob.txt
+	    dialog --textbox prob.txt $HEIGHT $WIDTH
+	    ;;
+	4)
+	    leetcode submit "${PROB_NUMBER}" > prob.txt
+	    dialog --textbox prob.txt $HEIGHT $WIDTH
+	    ;;
+	5)
+	    PROB_NUMBER=$(processList)
+	    ;;
+	6)
+	    LIST_CHOICE=$(promptList)
+	    clear
+	    loadList $LIST_CHOICE	    
+	    ;;
+    esac    
+}
+
+while true; do
+    # If we have a problem number, process right away
+    if [ -n "$PROB_NUMBER" ]
+    then
+	processProblem $PROB_NUMBER
+	clear
+    else
+	# If we have a problem cache, open up the list
+	if [ -e prob_cache.txt ]
+	then
+	    PROB_NUMBER=$(processList)
+	else
+	    LIST_CHOICE=$(promptList)
+	    clear
+	    loadList $LIST_CHOICE
+	fi
+    fi
 done
+ 
+
