@@ -17,6 +17,7 @@ PROB_OPT=(1 "Show Problem"
 	  4 "Submit Solution"
 	  5 "Change Problem"
 	  6 "Change Problem List"
+	  7 "Quit"
 	 )
 
 
@@ -85,6 +86,10 @@ function processProblem() {
 	    clear
 	    loadList $LIST_CHOICE	    
 	    ;;
+	7)
+	    clear
+	    exit
+	    ;;
     esac    
 }
 
@@ -99,10 +104,12 @@ while true; do
 	if [ -e prob_cache.txt ]
 	then
 	    PROB_NUMBER=$(processList)
+	    clear
 	else
 	    LIST_CHOICE=$(promptList)
 	    clear
 	    loadList $LIST_CHOICE
+	    clear
 	fi
     fi
 done
