@@ -19,14 +19,10 @@ $ ./lcv.sh
 
 ** Screenshots
 *** Problem List Selection
-[[./png/lcv04.png]]
-
+[[file:./png/lcv04.png]]
 *** Problem Selection
-[[./png/lcv01.png]]
+[[file:./png/lcv01.png]]
 *** Actions
-[[./png/lcv02.png]]
-
+[[file:./png/lcv02.png]]
 *** Problem Description
-[[./png/lcv03.png]]
-
-
+[[file:./png/lcv03.png]]
