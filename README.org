@@ -1,6 +1,13 @@
 * Leetcode CLI Viewer (LCV)
 
 ** Dependency
+
+*** leetcode-cli
+#+begin_src org :eval never-export
+https://github.com/clearloop/leetcode-cli
+#+end_src
+
+*** GNU dialog
 #+begin_src org :eval never-export
 sudo apt install dialog
 #+end_src
