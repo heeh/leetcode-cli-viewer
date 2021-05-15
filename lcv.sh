@@ -9,6 +9,7 @@ MENU="Choose one of the following options:"
 
 LIST_OPT=(1 "List Problems(Easy)"
           2 "List Problems(Medium)"
+	  3 "Quit"
 	 )
 
 PROB_OPT=(1 "Show Problem"
@@ -46,6 +47,10 @@ function loadList() {
 	2)
 	    leetcode list -q mDL > prob_cache.txt
 	    ;;
+	3)
+	    clear
+	    exit
+	    ;;	
     esac
 }
 
@@ -62,6 +67,7 @@ function processList() {
     then
 	echo $PROB_NUMBER
     else
+	rm prob_cache.txt
 	break
     fi
 }
@@ -104,13 +110,14 @@ function processProblem() {
 		;;
 	esac
     else
+	PROB_NUMBER=""
 	break
     fi
 }
 
 
-
-while true; do
+function main() {
+    while true; do
     # If we have a problem number, process right away
     if [ -n "$PROB_NUMBER" ]
     then
@@ -129,6 +136,8 @@ while true; do
 	    clear
 	fi
     fi
-done
+    done
+}
 
+main
 
