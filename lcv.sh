@@ -36,10 +36,10 @@ function loadList() {
     local LIST_CHOICE=$1
     case $LIST_CHOICE in
 	1)
-	    leetcode list -q e > prob_cache.txt
+	    leetcode list -q eDL > prob_cache.txt
 	    ;;
 	2)
-	    leetcode list -q m > prob_cache.txt
+	    leetcode list -q mDL > prob_cache.txt
 	    ;;
     esac
 }
@@ -69,7 +69,6 @@ function processProblem() {
 	    ;;
 	2)
 	    leetcode edit "${PROB_NUMBER}" > prob.txt
-	    dialog --textbox prob.txt $HEIGHT $WIDTH
 	    ;;
 	3)
 	    leetcode test "${PROB_NUMBER}" > prob.txt
