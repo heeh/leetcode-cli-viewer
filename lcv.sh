@@ -63,7 +63,8 @@ function processProblem() {
 			 2>&1 >/dev/tty)     
     case $PROB_ACTION in
 	1)
-	    leetcode pick "${PROB_NUMBER}" > prob.txt
+#	    leetcode pick "${PROB_NUMBER}" > prob.txt
+	    leetcode pick "${PROB_NUMBER}" | fold -w 80 -s > prob.txt
 	    dialog --textbox prob.txt $HEIGHT $WIDTH
 	    ;;
 	2)
