@@ -75,7 +75,7 @@ function processProblem() {
 	    dialog --textbox prob.txt $HEIGHT $WIDTH
 	    ;;
 	4)
-	    leetcode submit "${PROB_NUMBER}" > prob.txt
+	    leetcode exec "${PROB_NUMBER}" > prob.txt
 	    dialog --textbox prob.txt $HEIGHT $WIDTH
 	    ;;
 	5)
