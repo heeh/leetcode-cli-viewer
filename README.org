@@ -1,5 +1,15 @@
 * Leetcode CLI Viewer (LCV)
 
+** Screenshots
+*** Problem List Selection
+[[file:./png/lcv04.png]]
+*** Problem Selection
+[[file:./png/lcv01.png]]
+*** Actions
+[[file:./png/lcv02.png]]
+*** Problem Description
+[[file:./png/lcv03.png]]
+
 ** Dependency
 
 *** leetcode-cli
@@ -16,13 +26,3 @@ sudo apt install dialog
 #+begin_src org :eval never-export
 $ ./lcv.sh
 #+end_src
-
-** Screenshots
-*** Problem List Selection
-[[file:./png/lcv04.png]]
-*** Problem Selection
-[[file:./png/lcv01.png]]
-*** Actions
-[[file:./png/lcv02.png]]
-*** Problem Description
-[[file:./png/lcv03.png]]
