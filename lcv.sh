@@ -42,10 +42,10 @@ function loadList() {
     local LIST_CHOICE=$1
     case $LIST_CHOICE in
 	1)
-	    leetcode list -q eDL > prob_cache.txt
+	    leetcode list -q eD > prob_cache.txt
 	    ;;
 	2)
-	    leetcode list -q mDL > prob_cache.txt
+	    leetcode list -q mD > prob_cache.txt
 	    ;;
 	3)
 	    clear
