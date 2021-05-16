@@ -26,3 +26,8 @@ sudo apt install dialog
 #+begin_src org :eval never-export
 $ ./lcv.sh
 #+end_src
+
+** Customize Theme
+#+begin_src org :eval never-export
+dialog --create-rc ~/.dialogrc
+#+end_src
