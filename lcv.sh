@@ -1,5 +1,7 @@
 #!/bin/bash
 
+TEXT_WIDTH=80
+
 HEIGHT=0
 WIDTH=0
 CHOICE_HEIGHT=10
@@ -81,18 +83,21 @@ function processProblem() {
 	case $PROB_ACTION in
 	    1)
 		#	    leetcode pick "${PROB_NUMBER}" > prob.txt
-		leetcode pick "${PROB_NUMBER}" | fold -w 60 -s > prob.txt
-		dialog --keep-tite --textbox prob.txt $HEIGHT $WIDTH
+		clear
+		leetcode pick "${PROB_NUMBER}" | fold -w $TEXT_WIDTH -s > prob.txt
+		dialog --textbox prob.txt $HEIGHT $WIDTH
 		;;
 	    2)
 		leetcode edit "${PROB_NUMBER}" > prob.txt
 		;;
 	    3)
-		leetcode test "${PROB_NUMBER}" | fold -w 60 -s > prob.txt
+		clear
+		leetcode test "${PROB_NUMBER}" | fold -w $TEXT_WIDTH -s > prob.txt
 		dialog --textbox prob.txt $HEIGHT $WIDTH
 		;;
 	    4)
-		leetcode exec "${PROB_NUMBER}" | fold -w 60 -s > prob.txt
+		clear
+		leetcode exec "${PROB_NUMBER}" | fold -w $TEXT_WIDTH -s > prob.txt
 		dialog --textbox prob.txt $HEIGHT $WIDTH
 		;;
 	    5)
