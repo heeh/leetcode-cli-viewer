@@ -67,7 +67,6 @@ function processList() {
     then
 	echo $PROB_NUMBER
     else
-	rm prob_cache.txt
 	break
     fi
 }
@@ -82,18 +81,18 @@ function processProblem() {
 	case $PROB_ACTION in
 	    1)
 		#	    leetcode pick "${PROB_NUMBER}" > prob.txt
-		leetcode pick "${PROB_NUMBER}" | fold -w 80 -s > prob.txt
+		leetcode pick "${PROB_NUMBER}" | fold -w 60 -s > prob.txt
 		dialog --keep-tite --textbox prob.txt $HEIGHT $WIDTH
 		;;
 	    2)
 		leetcode edit "${PROB_NUMBER}" > prob.txt
 		;;
 	    3)
-		leetcode test "${PROB_NUMBER}" > prob.txt
+		leetcode test "${PROB_NUMBER}" | fold -w 60 -s > prob.txt
 		dialog --textbox prob.txt $HEIGHT $WIDTH
 		;;
 	    4)
-		leetcode exec "${PROB_NUMBER}" > prob.txt
+		leetcode exec "${PROB_NUMBER}" | fold -w 60 -s > prob.txt
 		dialog --textbox prob.txt $HEIGHT $WIDTH
 		;;
 	    5)
@@ -105,6 +104,7 @@ function processProblem() {
 		loadList $LIST_CHOICE	    
 		;;
 	    7)
+		rm prob_cache.txt
 		clear
 		exit
 		;;
