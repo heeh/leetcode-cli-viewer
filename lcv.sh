@@ -9,8 +9,10 @@ BACKTITLE="Backtitle here"
 TITLE="Title here"
 MENU="Choose one of the following options:"
 
-LIST_OPT=(1 "List Problems(Easy)"
-          2 "List Problems(Medium)"
+LIST_OPT=(1 "TODO List Problems(Easy)"
+          2 "TODO List Problems(Medium)"
+	  3 "DONE (Easy)"
+	  4 "DONE (Medium)"
 	  3 "Quit"
 	 )
 
@@ -20,7 +22,8 @@ PROB_OPT=(1 "Show Problem"
 	  4 "Submit Solution"
 	  5 "Change Problem"
 	  6 "Change Problem List"
-	  7 "Quit"
+	  7 "Show Stat"
+	  8 "Quit"
 	 )
 
 
@@ -36,6 +39,9 @@ function promptList() {
     then
 	echo $LIST_CHOICE
     else
+	PROB_NUMBER=""
+	rm prob.txt
+	rm prob_cache.txt	
 	break
     fi
 }
@@ -50,7 +56,14 @@ function loadList() {
 	    leetcode list -q mD > prob_cache.txt
 	    ;;
 	3)
+	    leetcode list -q ed > prob_cache.txt
+	    ;;
+	4)
+	    leetcode list -q md > prob_cache.txt
+	    ;;	
+	5)
 	    clear
+	    rm prob_cache.txt
 	    exit
 	    ;;	
     esac
@@ -69,6 +82,9 @@ function processList() {
     then
 	echo $PROB_NUMBER
     else
+	PROB_NUMBER=""
+	rm prob.txt
+	rm prob_cache.txt	
 	break
     fi
 }
@@ -101,21 +117,32 @@ function processProblem() {
 		dialog --textbox prob.txt $HEIGHT $WIDTH
 		;;
 	    5)
-		PROB_NUMBER=$(processList)
+		PROB_NUMBER=""
+		rm prob.txt
 		;;
 	    6)
-		LIST_CHOICE=$(promptList)
-		clear
-		loadList $LIST_CHOICE	    
+		PROB_NUMBER=""
+		rm prob.txt
+		rm prob_cache.txt
+		break
 		;;
 	    7)
+		leetcode stat > stat.txt
+		dialog --textbox stat.txt $HEIGHT $WIDTH
+		rm stat.txt
+		;;
+	    8)
+		rm prob.txt
 		rm prob_cache.txt
+		rm stat.txt
 		clear
 		exit
 		;;
 	esac
     else
 	PROB_NUMBER=""
+	rm prob.txt
+	rm prob_cache.txt
 	break
     fi
 }
@@ -123,26 +150,24 @@ function processProblem() {
 
 function main() {
     while true; do
-    # If we have a problem number, process right away
-    if [ -n "$PROB_NUMBER" ]
-    then
-	processProblem $PROB_NUMBER
-	clear
-    else
-	# If we have a problem cache, open up the list
 	if [ -e prob_cache.txt ]
-	then
-	    PROB_NUMBER=$(processList)
-	    clear
+	    then
+		if [ ! -z "$PROB_NUMBER" ]  
+		then
+		    processProblem $PROB_NUMBER
+		    clear
+		else # no problem selected yet
+		    PROB_NUMBER=$(processList)
+		    clear
+		fi
 	else
+	    PROB_NUMBER=""
 	    LIST_CHOICE=$(promptList)
-	    clear
 	    loadList $LIST_CHOICE
-	    clear
+
 	fi
-    fi
     done
 }
-
+ 
 main
 
