@@ -5,15 +5,16 @@ TEXT_WIDTH=80
 HEIGHT=0
 WIDTH=0
 CHOICE_HEIGHT=10
-BACKTITLE="Backtitle here"
-TITLE="Title here"
+BACKTITLE=""
+TITLE=""
 MENU="Choose one of the following options:"
 
-LIST_OPT=(1 "TODO List Problems(Easy)"
-          2 "TODO List Problems(Medium)"
-	  3 "DONE (Easy)"
-	  4 "DONE (Medium)"
-	  3 "Quit"
+LIST_OPT=(1 "TODO Locked Easy"
+          2 "TODO Locked Medium"
+	  3 "DONE Easy"
+	  4 "DONE Medium"
+	  5 "Statatistics"
+	  6 "Quit"
 	 )
 
 PROB_OPT=(1 "Show Problem"
@@ -22,8 +23,7 @@ PROB_OPT=(1 "Show Problem"
 	  4 "Submit Solution"
 	  5 "Change Problem"
 	  6 "Change Problem List"
-	  7 "Show Stat"
-	  8 "Quit"
+	  7 "Quit"
 	 )
 
 
@@ -50,18 +50,23 @@ function loadList() {
     local LIST_CHOICE=$1
     case $LIST_CHOICE in
 	1)
-	    leetcode list -q eD > prob_cache.txt
+	    leetcode list -q leD > prob_cache.txt
 	    ;;
 	2)
-	    leetcode list -q mD > prob_cache.txt
+	    leetcode list -q lmD > prob_cache.txt
 	    ;;
 	3)
 	    leetcode list -q ed > prob_cache.txt
 	    ;;
 	4)
 	    leetcode list -q md > prob_cache.txt
-	    ;;	
+	    ;;
 	5)
+	    leetcode stat > stat.txt
+	    dialog --textbox stat.txt $HEIGHT $WIDTH
+	    rm stat.txt
+	    ;;		
+	6)
 	    clear
 	    rm prob_cache.txt
 	    exit
@@ -126,11 +131,7 @@ function processProblem() {
 		rm prob_cache.txt
 		break
 		;;
-	    7)
-		leetcode stat > stat.txt
-		dialog --textbox stat.txt $HEIGHT $WIDTH
-		rm stat.txt
-		;;
+
 	    8)
 		rm prob.txt
 		rm prob_cache.txt
