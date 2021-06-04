@@ -1,6 +1,6 @@
 #!/bin/bash
 
-TEXT_WIDTH=80
+TEXT_WIDTH=60
 
 HEIGHT=0
 WIDTH=0
@@ -136,7 +136,7 @@ function processProblem() {
 		break
 		;;
 
-	    8)
+	    7)
 		rm prob.txt
 		rm prob_cache.txt
 		rm stat.txt
