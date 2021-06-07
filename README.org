@@ -1,4 +1,4 @@
-* Leetcode CLI Viewer (LCV)
+* Leetcode Dialog
 
 ** Screenshots
 *** Problem List Selection
