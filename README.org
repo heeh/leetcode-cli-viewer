@@ -1,5 +1,25 @@
 * Leetcode Dialog
 
+** Dependency
+*** GNU dialog
+#+begin_src org :eval never-export
+sudo apt install dialog
+#+end_src
+*** leetcode-cli
+#+begin_src org :eval never-export
+https://github.com/clearloop/leetcode-cli
+#+end_src
+
+** Run
+#+begin_src org :eval never-export
+$ ./leetcode-dialog.sh
+#+end_src
+
+** Customize Theme
+#+begin_src org :eval never-export
+dialog --create-rc ~/.dialogrc
+#+end_src
+
 ** Screenshots
 *** Problem List Selection
 [[file:./png/lcv04.png]]
@@ -9,25 +29,3 @@
 [[file:./png/lcv02.png]]
 *** Problem Description
 [[file:./png/lcv03.png]]
-
-** Dependency
-
-*** leetcode-cli
-#+begin_src org :eval never-export
-https://github.com/clearloop/leetcode-cli
-#+end_src
-
-*** GNU dialog
-#+begin_src org :eval never-export
-sudo apt install dialog
-#+end_src
-
-** Run
-#+begin_src org :eval never-export
-$ ./lcv.sh
-#+end_src
-
-** Customize Theme
-#+begin_src org :eval never-export
-dialog --create-rc ~/.dialogrc
-#+end_src
