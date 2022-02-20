@@ -1,8 +1,8 @@
 * Leetcode Dialog
 
 ** Dependency
-*** GNU Dialog
-**** Linux
+*** 1. GNU Dialog
+Linux
 #+begin_src org :eval never-export
 sudo apt install dialog
 #+end_src
@@ -11,7 +11,7 @@ sudo apt install dialog
 brew install dialog
 #+end_src
 
-*** leetcode-cli
+*** 2. leetcode-cli
 #+begin_src org :eval never-export
 https://github.com/clearloop/leetcode-cli
 #+end_src
