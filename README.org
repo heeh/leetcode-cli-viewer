@@ -13,7 +13,8 @@ brew install dialog
 
 *** 2. leetcode-cli
 #+begin_src org :eval never-export
-https://github.com/clearloop/leetcode-cli
+# https://github.com/clearloop/leetcode-cli
+cargo install leetcode-cli
 #+end_src
 
 ** Run
