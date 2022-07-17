@@ -1,6 +1,8 @@
 #!/bin/bash
 
-TEXT_WIDTH=60
+CACHE_DIR="/home/heeh/.leetcode"
+
+TEXT_WIDTH=80
 
 HEIGHT=0
 WIDTH=0
@@ -40,31 +42,35 @@ function promptList() {
 	echo $LIST_CHOICE
     else
 	PROB_NUMBER=""
-	if [ -e prob.txt ]
+	if [ -e ${CACHE_DIR}/prob.txt ]
 	   then
-	       rm prob.txt
+	       rm ${CACHE_DIR}/prob.txt
 	fi
-	if [ -e prob_cache.txt ]
+	if [ -e ${CACHE_DIR}/prob_cache.txt ]
 	   then	
-	       rm prob_cache.txt
+	       rm ${CACHE_DIR}/prob_cache.txt
 	fi
     fi
 }
 
 function loadList() {
+    if [ ! -e ${CACHE_DIR}/prob_cache.txt ]
+    then
+	touch ${CACHE_DIR}/prob_cache.txt
+    fi
     local LIST_CHOICE=$1
     case $LIST_CHOICE in
 	1)
-	    leetcode list -c algorithms -q eD > prob_cache.txt
+	    leetcode list -c algorithms -q eD > ${CACHE_DIR}/prob_cache.txt
 	    ;;
 	2)
-	    leetcode list -c algorithms -q mD > prob_cache.txt
+	    leetcode list -c algorithms -q mD > ${CACHE_DIR}/prob_cache.txt
 	    ;;
 	3)
-	    leetcode list -c algorithms -q ed > prob_cache.txt
+	    leetcode list -c algorithms -q ed > ${CACHE_DIR}/prob_cache.txt
 	    ;;
 	4)
-	    leetcode list -c algorithms -q md > prob_cache.txt
+	    leetcode list -c algorithms -q md > ${CACHE_DIR}/prob_cache.txt
 	    ;;
 	5)
 	    leetcode stat
@@ -72,7 +78,7 @@ function loadList() {
 	    ;;		
 	6)
 	    clear
-	    rm prob_cache.txt
+	    rm ${CACHE_DIR}/prob_cache.txt
 	    exit
 	    ;;	
     esac
@@ -83,7 +89,7 @@ function processList() {
     while read -r s ; do
 	index=$(echo "$s" | grep -o -E '[0-9]+' | head -1 )
 	PROBLEMS+=("$index" "${s}")
-    done < prob_cache.txt
+    done < ${CACHE_DIR}/prob_cache.txt
     PROB_NUMBER=$(dialog --menu "$MENU" $HEIGHT $WIDTH $CHOICE_HEIGHT \
 			 "${PROBLEMS[@]}" \
 			 2>&1 >/dev/tty)
@@ -92,8 +98,8 @@ function processList() {
 	echo $PROB_NUMBER
     else
 	PROB_NUMBER=""
-	rm prob.txt
-	rm prob_cache.txt	
+	rm ${CACHE_DIR}/prob.txt
+	rm ${CACHE_DIR}/prob_cache.txt	
 	break
     fi
 }
@@ -107,47 +113,47 @@ function processProblem() {
     then
 	case $PROB_ACTION in
 	    1)
-		#	    leetcode pick "${PROB_NUMBER}" > prob.txt
+		#	    leetcode pick "${PROB_NUMBER}" > ${CACHE_DIR}/prob.txt
 		clear
-		leetcode pick "${PROB_NUMBER}" | fold -w $TEXT_WIDTH -s > prob.txt
-		dialog --textbox prob.txt $HEIGHT $WIDTH
+		leetcode pick "${PROB_NUMBER}" | fold -w $TEXT_WIDTH -s > ${CACHE_DIR}/prob.txt
+		dialog --textbox ${CACHE_DIR}/prob.txt $HEIGHT $WIDTH
 		;;
 	    2)
-		leetcode edit "${PROB_NUMBER}" > prob.txt
+		leetcode edit "${PROB_NUMBER}" > ${CACHE_DIR}/prob.txt
 		;;
 	    3)
 		clear
-		leetcode test "${PROB_NUMBER}" | fold -w $TEXT_WIDTH -s > prob.txt
-		dialog --textbox prob.txt $HEIGHT $WIDTH
+		leetcode test "${PROB_NUMBER}" | fold -w $TEXT_WIDTH -s > ${CACHE_DIR}/prob.txt
+		dialog --textbox ${CACHE_DIR}prob.txt $HEIGHT $WIDTH
 		;;
 	    4)
 		clear
-		leetcode exec "${PROB_NUMBER}" | fold -w $TEXT_WIDTH -s > prob.txt
-		dialog --textbox prob.txt $HEIGHT $WIDTH
+		leetcode exec "${PROB_NUMBER}" | fold -w $TEXT_WIDTH -s > ${CACHE_DIR}/prob.txt
+		dialog --textbox ${CACHE_DIR}/prob.txt $HEIGHT $WIDTH
 		;;
 	    5)
 		PROB_NUMBER=""
-		rm prob.txt
+		rm ${CACHE_DIR}/prob.txt
 		;;
 	    6)
 		PROB_NUMBER=""
-		rm prob.txt
-		rm prob_cache.txt
+		rm ${CACHE_DIR}/prob.txt
+		rm ${CACHE_DIR}/prob_cache.txt
 		break
 		;;
 
 	    7)
-		rm prob.txt
-		rm prob_cache.txt
-		rm stat.txt
+		rm ${CACHE_DIR}/prob.txt
+		rm ${CACHE_DIR}/prob_cache.txt
+		rm ${CACHE_DIR}/stat.txt
 		clear
 		exit
 		;;
 	esac
     else
 	PROB_NUMBER=""
-	rm prob.txt
-	rm prob_cache.txt
+	rm ${CACHE_DIR}/prob.txt
+	rm ${CACHE_DIR}/prob_cache.txt
 	break
     fi
 }
@@ -155,7 +161,7 @@ function processProblem() {
 
 function main() {
     while true; do
-	if [ -e prob_cache.txt ]
+	if [ -e ${CACHE_DIR}/prob_cache.txt ]
 	    then
 		if [ ! -z "$PROB_NUMBER" ]  
 		then
