@@ -17,9 +17,10 @@ brew install dialog
 cargo install leetcode-cli
 #+end_src
 
-** Run
+** Create a link and run
 #+begin_src org :eval never-export
-$ ./leetcode-dialog.sh
+$ sudo ln -s <download_location>/leetcode-dialog/lc.sh /usr/local/bin/lc
+$ ./lc
 #+end_src
 
 ** Customize Theme
