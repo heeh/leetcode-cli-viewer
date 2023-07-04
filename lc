@@ -124,7 +124,7 @@ function processProblem() {
 	    3)
 		clear
 		leetcode test "${PROB_NUMBER}" | fold -w $TEXT_WIDTH -s > ${CACHE_DIR}/prob.txt
-		dialog --textbox ${CACHE_DIR}prob.txt $HEIGHT $WIDTH
+		dialog --textbox ${CACHE_DIR}/prob.txt $HEIGHT $WIDTH
 		;;
 	    4)
 		clear
