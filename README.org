@@ -14,6 +14,12 @@ brew install dialog
 *** 2. leetcode-cli
 #+begin_src org :eval never-export
 # https://github.com/clearloop/leetcode-cli
+# Required dependencies:
+#
+#  gcc
+#  libssl-dev
+#  libdbus-1-dev
+#  libsqlite3-dev
 cargo install leetcode-cli
 #+end_src
 
